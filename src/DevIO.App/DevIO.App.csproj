@@ -19,4 +19,14 @@
     <ProjectReference Include="..\DevIO.Data\DevIO.Data.csproj" />
   </ItemGroup>
 
+
+  <ItemGroup>
+    <Folder Include="wwwroot\imagens\" />
+  </ItemGroup>
+
+
+  <ItemGroup>
+    <None Include="wwwroot\imagens\58efb8c4-f148-408e-9e3d-24c527c54fa9_JavaScript.jpg" />
+  </ItemGroup>
+
 </Project>
