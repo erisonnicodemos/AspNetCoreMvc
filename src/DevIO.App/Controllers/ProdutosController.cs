@@ -80,9 +80,30 @@ namespace DevIO.App.Controllers
         {
             if (id != produtoViewModel.Id) return NotFound();
 
+            var produtoAtuliazacao = await ObterProduto(id);
+            produtoViewModel.Fornecedor = produtoAtuliazacao.Fornecedor;
+            produtoViewModel.Imagem = produtoAtuliazacao.Imagem;
+
             if (!ModelState.IsValid) return View(produtoViewModel);
 
-            await _produtoRepository.Atualizar(_mapper.Map<Produto>(produtoViewModel));
+            if (produtoViewModel.ImagemUpload != null)
+            {
+                var imgPrefixo = Guid.NewGuid() + "_";
+
+                if (!await UploadArquivo(produtoViewModel.ImagemUpload, imgPrefixo))
+                {
+                    return View(produtoViewModel);
+                }
+
+                produtoAtuliazacao.Imagem = imgPrefixo + produtoViewModel.ImagemUpload.FileName;
+            }
+
+            produtoAtuliazacao.Nome = produtoViewModel.Nome;
+            produtoAtuliazacao.Descricao = produtoViewModel.Descricao;
+            produtoAtuliazacao.Valor = produtoViewModel.Valor;
+            produtoAtuliazacao.Ativo = produtoViewModel.Ativo;
+
+            await _produtoRepository.Atualizar(_mapper.Map<Produto>(produtoAtuliazacao));
 
             return RedirectToAction("Index");
         }
