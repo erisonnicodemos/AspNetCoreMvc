@@ -22,7 +22,7 @@ namespace DevIO.App.ViewModels
         public string Documento { get; set; }
 
         [DisplayName("Tipo")]
-        public TipoFornecedor TipoFornecedor { get; set; }
+        public int TipoFornecedor { get; set; }
 
         public Endereco Endereco { get; set; }
 
